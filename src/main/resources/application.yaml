@@ -6,7 +6,7 @@ spring:
     name: Expense-Tracker
 
   datasource:
-    url: jdbc:mysql://localhost:3306/ex_tracker?useUnicode=yes&characterEncoding=UTF-8&characterSetResults=UTF-8&createDatabaseIfNotExist=true
+    url: jdbc:mysql://db:3306/ex_tracker?useUnicode=yes&characterEncoding=UTF-8&characterSetResults=UTF-8&createDatabaseIfNotExist=true
     username: root
     password: root
     driver-class-name: com.mysql.cj.jdbc.Driver
@@ -27,3 +27,11 @@ spring:
 
   liquibase:
     change-log: classpath:db/changelog/db.changelog-master.xml
+
+general:
+  cors_enabled: false
+
+jwt:
+  secret: dvd25vQuuiPZvi46advjewu
+  token_validity_in_minutes: 480  # 8 * 60
+  refresh_token_validity_in_minutes: 1440 # 24 * 60

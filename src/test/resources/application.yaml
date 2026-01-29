@@ -29,3 +29,11 @@ spring:
     init:
       platform: h2
       continue-on-error: true
+
+general:
+  cors_enabled: false
+
+jwt:
+  secret: dvd25vQuuiPZvi46advjewu
+  token_validity_in_minutes: 480  # 8 * 60
+  refresh_token_validity_in_minutes: 1440 # 24 * 60

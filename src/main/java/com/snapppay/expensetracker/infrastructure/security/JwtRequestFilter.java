@@ -1,0 +1,88 @@
+package com.snapppay.expensetracker.infrastructure.security;
+
+import com.snapppay.expensetracker.domain.model.UserAuthority;
+import com.snapppay.expensetracker.infrastructure.entity.UserEntity;
+import com.snapppay.expensetracker.infrastructure.repository.UserRepository;
+import com.snapppay.expensetracker.infrastructure.security.JwtTokenService.TokenInfo;
+import jakarta.servlet.FilterChain;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
+import org.springframework.stereotype.Component;
+import org.springframework.web.filter.OncePerRequestFilter;
+
+@Slf4j
+@Component
+@RequiredArgsConstructor
+public class JwtRequestFilter extends OncePerRequestFilter {
+
+  private static final String AUTHORIZATION_HEADER_KEY = "Authorization";
+
+  private final JwtTokenService jwtTokenService;
+  private final UserRepository userRepository;
+
+  @Override
+  protected void doFilterInternal(
+      @NonNull HttpServletRequest request,
+      @NonNull HttpServletResponse response,
+      @NonNull FilterChain filterChain
+  ) throws ServletException, IOException {
+    String jwtToken = request.getHeader(AUTHORIZATION_HEADER_KEY);
+
+    if (jwtToken != null) {
+      TokenInfo tokenInfo = jwtTokenService.getTokenInfo(jwtToken)
+          .orElse(null);
+
+      boolean isTokenInfoComplete = tokenInfo != null;
+      boolean isTokenValid = isTokenInfoComplete && tokenInfo.isValidAsAnAccess();
+
+      if (isTokenValid && SecurityContextHolder.getContext().getAuthentication() == null) {
+
+        UserEntity userEntity = userRepository.findByUserId(
+                tokenInfo.getUserUUID())
+            .orElse(null);
+
+        // TODO: In the future, instead of returning null, throw an appropriate exception like UserNotFoundException
+
+        if (userEntity != null) {
+          CustomUserDetails customUserDetails = CustomUserDetails.builder()
+              .id(userEntity.getId())
+              .username(tokenInfo.getUsername())
+              .authority(UserAuthority.valueOf(tokenInfo.getAuthority()))
+              .build();
+
+          checkAuthenticationAndFillSecurityContext(request, customUserDetails);
+        }
+
+      }
+
+    }
+
+    filterChain.doFilter(request, response);
+  }
+
+  private void checkAuthenticationAndFillSecurityContext(
+      HttpServletRequest request,
+      CustomUserDetails user
+  ) {
+    UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(
+        user,
+        null,
+        user.getAuthorities()
+    );
+
+    usernamePasswordAuthenticationToken.setDetails(
+        new WebAuthenticationDetailsSource().buildDetails(request)
+    );
+
+    SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
+  }
+
+}
