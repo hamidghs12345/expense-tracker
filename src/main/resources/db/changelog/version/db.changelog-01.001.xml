@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.4.xsd">
+
+  <changeSet id="CreateUser" author="Hamid Ghs">
+    <sql>
+
+      CREATE TABLE user_role
+      (
+        authority  VARCHAR(20)   NOT NULL,
+        title      VARCHAR(20)   NULL,
+        CONSTRAINT pk_user_role PRIMARY KEY (authority)
+      );
+
+      INSERT INTO user_role (authority, title) VALUES ('USER', 'User');
+
+
+      CREATE TABLE user
+      (
+        id              BIGINT AUTO_INCREMENT  NOT NULL,
+        user_id         BINARY(16)             NULL,
+        created_at      datetime(3)            NULL,
+        updated_at      datetime(3)            NULL,
+        role_authority  VARCHAR(20)            NULL,
+        mobile          VARCHAR(20)            NULL,
+        password        VARCHAR(255)           NOT NULL,
+        fingerprint     VARCHAR(255)           NULL,
+        CONSTRAINT pk_user PRIMARY KEY (id)
+      );
+
+      ALTER TABLE user
+        ADD CONSTRAINT uc_user_mobile UNIQUE (mobile);
+
+      ALTER TABLE user
+        ADD CONSTRAINT uc_user_userid UNIQUE (user_id);
+
+      ALTER TABLE user
+        ADD CONSTRAINT fk_user_on_role FOREIGN KEY (role_authority) REFERENCES user_role (authority);
+
+    </sql>
+  </changeSet>
+
+</databaseChangeLog>
