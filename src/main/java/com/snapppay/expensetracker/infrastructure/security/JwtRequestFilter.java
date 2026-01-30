@@ -51,13 +51,8 @@ public class JwtRequestFilter extends OncePerRequestFilter {
             .orElseThrow(UnauthorizedException::new);
 
         if (userEntity != null) {
-          CustomUserDetails customUserDetails = CustomUserDetails.builder()
-              .id(userEntity.getId())
-              .username(tokenInfo.getUsername())
-              .authority(UserAuthority.valueOf(tokenInfo.getAuthority()))
-              .build();
 
-          checkAuthenticationAndFillSecurityContext(request, customUserDetails);
+          checkAuthenticationAndFillSecurityContext(request, userEntity);
         }
 
       }
@@ -69,7 +64,7 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 
   private void checkAuthenticationAndFillSecurityContext(
       HttpServletRequest request,
-      CustomUserDetails user
+      UserEntity user
   ) {
     UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(
         user,

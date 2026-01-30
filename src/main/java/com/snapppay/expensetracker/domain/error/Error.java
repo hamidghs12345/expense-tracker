@@ -83,8 +83,22 @@ public abstract class Error extends RuntimeException {
     public DuplicateException(ErrorEnum errorEnum) {
       super(errorEnum, HttpStatus.CONFLICT);
     }
-
   }
 
+  public static class NotFoundException extends Error {
+
+    public NotFoundException() {
+      super(ErrorEnum.GENERAL_NOT_FOUND, HttpStatus.NOT_FOUND);
+    }
+
+    public NotFoundException(String message) {
+      super(message, ErrorEnum.GENERAL_NOT_FOUND, HttpStatus.NOT_FOUND);
+    }
+
+    public NotFoundException(ErrorEnum errorEnum) {
+      super(errorEnum, HttpStatus.NOT_FOUND);
+    }
+
+  }
 
 }
