@@ -1,5 +1,6 @@
 package com.snapppay.expensetracker.infrastructure.service;
 
+import com.snapppay.expensetracker.domain.error.Error.UnauthorizedException;
 import com.snapppay.expensetracker.domain.model.AuthenticationInfo;
 import com.snapppay.expensetracker.domain.service.AuthenticationService;
 import com.snapppay.expensetracker.domain.usecase.Pair;
@@ -28,9 +29,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
   ) {
 
     UserEntity userEntity = userRepository.findByMobile(authenticationInfo.getMobile())
-        .orElse(null);
-
-    // TODO: In the future, instead of returning null, throw an appropriate exception like UserNotFoundException
+        .orElseThrow(UnauthorizedException::new);
 
     try {
       authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
@@ -38,8 +37,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
           authenticationInfo.getPassword()
       ));
     } catch (Throwable e) {
-
-      log.error(e.getMessage());
+      throw new UnauthorizedException();
     }
 
     log.info(

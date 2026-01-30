@@ -1,5 +1,6 @@
 package com.snapppay.expensetracker.infrastructure.security;
 
+import com.snapppay.expensetracker.domain.error.Error.UnauthorizedException;
 import com.snapppay.expensetracker.domain.model.UserAuthority;
 import com.snapppay.expensetracker.infrastructure.entity.UserEntity;
 import com.snapppay.expensetracker.infrastructure.repository.UserRepository;
@@ -47,9 +48,7 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 
         UserEntity userEntity = userRepository.findByUserId(
                 tokenInfo.getUserUUID())
-            .orElse(null);
-
-        // TODO: In the future, instead of returning null, throw an appropriate exception like UserNotFoundException
+            .orElseThrow(UnauthorizedException::new);
 
         if (userEntity != null) {
           CustomUserDetails customUserDetails = CustomUserDetails.builder()
