@@ -42,4 +42,19 @@
     </sql>
   </changeSet>
 
+  <changeSet id="CreateOtp" author="Hamid Ghs">
+
+    <sql>
+
+      CREATE TABLE otp
+      (
+        reference       VARCHAR(255) NOT NULL,
+        reference_type  VARCHAR(255) NOT NULL,
+        code            VARCHAR(255) NULL,
+        expiration_date datetime     NULL,
+        CONSTRAINT pk_otp PRIMARY KEY (reference, reference_type)
+      );
+
+    </sql>
+  </changeSet>
 </databaseChangeLog>

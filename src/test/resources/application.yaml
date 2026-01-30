@@ -38,3 +38,6 @@ jwt:
   secret: dvd25vQuuiPZvi46advjewu
   token_validity_in_minutes: 480  # 8 * 60
   refresh_token_validity_in_minutes: 1440 # 24 * 60
+
+otp:
+  validity_duration_in_minutes: 2

@@ -1,4 +1,4 @@
-package com.snapppay.expensetracker.infrastructure.entity;
+package com.snapppay.expensetracker.infrastructure.persistence.entity;
 
 import com.snapppay.expensetracker.domain.model.UserAuthority;
 import jakarta.persistence.Column;

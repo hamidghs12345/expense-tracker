@@ -2,8 +2,8 @@ package com.snapppay.expensetracker.infrastructure.security;
 
 import com.snapppay.expensetracker.domain.error.Error.UnauthorizedException;
 import com.snapppay.expensetracker.domain.model.UserAuthority;
-import com.snapppay.expensetracker.infrastructure.entity.UserEntity;
-import com.snapppay.expensetracker.infrastructure.repository.UserRepository;
+import com.snapppay.expensetracker.infrastructure.persistence.entity.UserEntity;
+import com.snapppay.expensetracker.infrastructure.persistence.repository.UserRepository;
 import com.snapppay.expensetracker.infrastructure.security.JwtTokenService.TokenInfo;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;

@@ -1,4 +1,4 @@
-package com.snapppay.expensetracker.infrastructure.entity;
+package com.snapppay.expensetracker.infrastructure.persistence.entity;
 
 import com.github.f4b6a3.ulid.UlidCreator;
 import jakarta.persistence.Column;
@@ -19,8 +19,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.AuthorityUtils;
 
 @Getter
 @Setter

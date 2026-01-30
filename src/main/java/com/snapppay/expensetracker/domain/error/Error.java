@@ -54,4 +54,37 @@ public abstract class Error extends RuntimeException {
     }
   }
 
+  public static class BadRequestException extends Error {
+
+    public BadRequestException() {
+      super(ErrorEnum.GENERAL_BAD_REQUEST, HttpStatus.BAD_REQUEST);
+    }
+
+    public BadRequestException(String message) {
+      super(message, ErrorEnum.GENERAL_BAD_REQUEST, HttpStatus.BAD_REQUEST);
+    }
+
+    public BadRequestException(ErrorEnum errorEnum) {
+      super(errorEnum, HttpStatus.BAD_REQUEST);
+    }
+
+  }
+
+  public static class DuplicateException extends Error {
+
+    public DuplicateException() {
+      super(ErrorEnum.GENERAL_DUPLICATION, HttpStatus.CONFLICT);
+    }
+
+    public DuplicateException(String message) {
+      super(message, ErrorEnum.GENERAL_DUPLICATION, HttpStatus.CONFLICT);
+    }
+
+    public DuplicateException(ErrorEnum errorEnum) {
+      super(errorEnum, HttpStatus.CONFLICT);
+    }
+
+  }
+
+
 }
