@@ -101,4 +101,10 @@ public abstract class Error extends RuntimeException {
 
   }
 
+  public static class RequiredFieldException extends Error {
+
+    public RequiredFieldException(ErrorEnum errorEnum) {
+      super(errorEnum, HttpStatus.BAD_REQUEST);
+    }
+  }
 }

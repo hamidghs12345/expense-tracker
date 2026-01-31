@@ -121,6 +121,13 @@ public class JwtTokenService {
             return isValidType && !isExpired;
         }
 
+        public boolean isValidAsARefresh() {
+            boolean isValidType = TOKEN_TYPE_REFRESH.equals(tokenType);
+            boolean isNotExpired = !isTokenExpired(expiresAt);
+
+            return isValidType && isNotExpired;
+        }
+
         private Boolean isTokenExpired(Date expiresAt) {
             return expiresAt.before(new Date());
         }

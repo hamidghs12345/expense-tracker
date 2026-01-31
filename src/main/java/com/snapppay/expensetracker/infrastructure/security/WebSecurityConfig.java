@@ -98,7 +98,8 @@ public class WebSecurityConfig {
                 "/swagger-resources/**",
                 "/swagger-ui/**",
                 "/swagger-ui.html",
-                "/api/v1/user/registration/**"
+                "/api/v1/user/registration/**",
+                "/api/v1/user/authentication/**"
             )
             .permitAll()
             .anyRequest()

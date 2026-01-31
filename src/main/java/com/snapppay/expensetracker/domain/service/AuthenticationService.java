@@ -8,4 +8,6 @@ public interface AuthenticationService {
 
   Pair<String, String> checkAuthenticationAndGetToken(AuthenticationInfo authenticationInfo);
 
+  Pair<String, String> refreshToken(String refreshToken);
+
 }

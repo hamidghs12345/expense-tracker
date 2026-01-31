@@ -10,6 +10,9 @@ public enum ErrorEnum {
     GENERAL_BAD_REQUEST(400101, 400, "error_general_bad_request"),
     MOBILE_REQUIRED(400102, 400, "error_mobile_required"),
     OTP_INVALID(400103, 400, "error_otp_invalid"),
+    LOGIN_INFO_REQUIRED(400104, 400, "error_login_info_required"),
+    EXCEED_MAX_PASSWORD_LENGTH(400105, 400, "error_exceed_max_password_length"),
+    REFRESH_TOKEN_REQUIRED(400106, 400, "error_refresh_token_required"),
 
     UNAUTHORIZED(401101, 401, "error_unauthorized"),
 

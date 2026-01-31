@@ -7,7 +7,9 @@ import com.snapppay.expensetracker.domain.usecase.Pair;
 import com.snapppay.expensetracker.infrastructure.persistence.entity.UserEntity;
 import com.snapppay.expensetracker.infrastructure.persistence.repository.UserRepository;
 import com.snapppay.expensetracker.infrastructure.security.JwtTokenService;
+import com.snapppay.expensetracker.infrastructure.security.JwtTokenService.TokenInfo;
 import com.snapppay.expensetracker.infrastructure.security.JwtTokenService.TokenRequest;
+import java.util.Objects;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -48,6 +50,21 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     return generateToken(userEntity);
   }
 
+  @Override
+  public Pair<String, String> refreshToken(String refreshToken) {
+    TokenInfo tokenInfo = checkRefreshTokenAndGetTokenInfo(refreshToken);
+
+    UserEntity userEntity = userRepository.findByUserId(tokenInfo.getUserUUID())
+        .orElseThrow(UnauthorizedException::new);
+
+    if (!Objects.equals(tokenInfo.getFingerprint(), userEntity.getFingerprint())) {
+      throw new UnauthorizedException();
+    }
+
+    return generateToken(userEntity);
+  }
+
+
   private Pair<String, String> generateToken(UserEntity userEntity) {
     TokenRequest tokenRequest = TokenRequest.builder()
         .userId(userEntity.getId())
@@ -64,6 +81,17 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     );
 
     return Pair.of(accessToken, refreshToken);
+  }
+
+  private TokenInfo checkRefreshTokenAndGetTokenInfo(String refreshToken) {
+    TokenInfo tokenInfo = jwtTokenService.getTokenInfo(refreshToken)
+        .orElse(null);
+
+    if (tokenInfo == null || !tokenInfo.isValidAsARefresh()) {
+      throw new UnauthorizedException();
+    }
+
+    return tokenInfo;
   }
 
 }
