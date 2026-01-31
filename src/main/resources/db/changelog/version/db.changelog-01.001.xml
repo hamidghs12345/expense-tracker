@@ -75,4 +75,49 @@
     </sql>
   </changeSet>
 
+  <changeSet id="Tag-Creation" author="Hamid Ghs">
+    <sql>
+
+      CREATE TABLE tag
+      (
+        id                BINARY(16)     NOT NULL,
+        user_id           BIGINT         NOT NULL,
+        name              VARCHAR(50)    NOT NULL,
+        created_at        datetime(3)    NULL,
+        updated_at        datetime(3)    NULL,
+        CONSTRAINT pk_tag PRIMARY KEY (id)
+      );
+
+
+      CREATE TABLE max_cost
+      (
+        id              BINARY(16)     NOT NULL,
+        tag_id          BINARY(16)     NOT NULL,
+        amount          DECIMAL(23, 5) NOT NULL,
+        period          VARCHAR(20)    NOT NULL,
+        created_at      datetime(3)    NULL,
+        updated_at      datetime(3)    NULL,
+        CONSTRAINT pk_max_cost PRIMARY KEY (id)
+      );
+
+      ALTER TABLE max_cost
+        ADD CONSTRAINT fk_max_cost_on_tagid FOREIGN KEY (tag_id) REFERENCES tag (id);
+
+
+      CREATE TABLE expense
+      (
+        id             BINARY(16)     NOT NULL,
+        tag_id         BINARY(16)     NOT NULL,
+        amount         DECIMAL(23, 5) NOT NULL,
+        created_at     datetime(3)    NULL,
+        updated_at     datetime(3)    NULL,
+        CONSTRAINT pk_expense PRIMARY KEY (id)
+      );
+
+      ALTER TABLE expense
+        ADD CONSTRAINT fk_expense_on_tagid FOREIGN KEY (tag_id) REFERENCES tag (id);
+
+    </sql>
+  </changeSet>
+
 </databaseChangeLog>
