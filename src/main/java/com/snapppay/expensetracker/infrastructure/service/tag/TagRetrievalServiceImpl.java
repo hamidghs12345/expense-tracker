@@ -1,5 +1,6 @@
 package com.snapppay.expensetracker.infrastructure.service.tag;
 
+import com.snapppay.expensetracker.domain.error.Error.NotFoundException;
 import com.snapppay.expensetracker.domain.model.tag.Tag;
 import com.snapppay.expensetracker.domain.model.tag.TagFilter;
 import com.snapppay.expensetracker.domain.service.tag.TagRetrievalService;
@@ -29,6 +30,13 @@ public class TagRetrievalServiceImpl implements TagRetrievalService {
             filter.toDate(),
             pageable)
         .map(this::mapToDomain);
+  }
+
+  @Override
+  public Tag get(UUID id) {
+    return tagRepository.findById(id)
+        .map(this::mapToDomain)
+        .orElseThrow(NotFoundException::new);
   }
 
   private Tag mapToDomain(TagEntity tagEntity) {
