@@ -5,6 +5,7 @@ import com.snapppay.expensetracker.domain.service.tag.MaxCostModificationService
 import com.snapppay.expensetracker.infrastructure.persistence.entity.income.IncomeEntity;
 import com.snapppay.expensetracker.infrastructure.persistence.entity.tag.MaxCostEntity;
 import com.snapppay.expensetracker.infrastructure.persistence.repository.MaxCostRepository;
+import jakarta.transaction.Transactional;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -16,6 +17,7 @@ public class MaxCostModificationServiceImpl implements MaxCostModificationServic
   private final MaxCostRepository maxCostRepository;
 
   @Override
+  @Transactional
   public void delete(UUID id) {
 
     MaxCostEntity maxCostEntity = maxCostRepository.findById(
