@@ -75,7 +75,7 @@
     </sql>
   </changeSet>
 
-  <changeSet id="Tag-Creation" author="Hamid Ghs">
+  <changeSet id="CreateTag" author="Hamid Ghs">
     <sql>
 
       CREATE TABLE tag
@@ -95,8 +95,6 @@
         tag_id          BINARY(16)     NOT NULL,
         amount          DECIMAL(23, 5) NOT NULL,
         period          VARCHAR(20)    NOT NULL,
-        created_at      datetime(3)    NULL,
-        updated_at      datetime(3)    NULL,
         CONSTRAINT pk_max_cost PRIMARY KEY (id)
       );
 
