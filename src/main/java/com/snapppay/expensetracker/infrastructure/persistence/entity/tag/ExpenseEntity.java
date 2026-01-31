@@ -45,11 +45,11 @@ public class ExpenseEntity {
   
   @CreationTimestamp
   @Column(columnDefinition = "DATETIME(3)")
-  private ZonedDateTime createAt;
+  private ZonedDateTime createdAt;
 
   @UpdateTimestamp
   @Column(columnDefinition = "DATETIME(3)")
-  private ZonedDateTime updateAt;
+  private ZonedDateTime updatedAt;
 
   @PrePersist
   public void prePersist() {
