@@ -1,6 +1,7 @@
 package com.snapppay.expensetracker.infrastructure.persistence.repository;
 
 import com.snapppay.expensetracker.infrastructure.persistence.entity.tag.ExpenseEntity;
+import java.math.BigDecimal;
 import java.time.ZonedDateTime;
 import java.util.UUID;
 import org.springframework.data.domain.Page;
@@ -24,4 +25,11 @@ public interface ExpenseRepository extends JpaRepository<ExpenseEntity, UUID> {
       Pageable pageable
   );
 
+  @Query("SELECT COALESCE(SUM(e.amount), 0) " +
+      "FROM ExpenseEntity e " +
+      "WHERE e.tagId = :tagId AND e.createdAt >= :from")
+  BigDecimal sumAmountByTagIdAndCreatedAtAfter(
+      @Param("tagId") UUID tagId,
+      @Param("from") ZonedDateTime from
+  );
 }

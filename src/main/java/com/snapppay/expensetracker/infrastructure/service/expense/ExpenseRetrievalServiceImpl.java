@@ -1,10 +1,12 @@
 package com.snapppay.expensetracker.infrastructure.service.expense;
 
+import com.snapppay.expensetracker.domain.error.Error.NotFoundException;
 import com.snapppay.expensetracker.domain.model.expense.Expense;
 import com.snapppay.expensetracker.domain.model.expense.ExpenseFilter;
 import com.snapppay.expensetracker.domain.service.expense.ExpenseRetrievalService;
 import com.snapppay.expensetracker.infrastructure.persistence.entity.tag.ExpenseEntity;
 import com.snapppay.expensetracker.infrastructure.persistence.repository.ExpenseRepository;
+import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
@@ -32,6 +34,14 @@ public class ExpenseRetrievalServiceImpl implements ExpenseRetrievalService {
         .map(this::mapToDomain);
 
   }
+
+  @Override
+  public Expense get(UUID id) {
+
+    return expenseRepository.findById(id)
+        .map(this::mapToDomain)
+        .orElseThrow(NotFoundException::new);  }
+
 
   private Expense mapToDomain(ExpenseEntity expenseEntity) {
     return modelMapper.map(expenseEntity, Expense.class);
