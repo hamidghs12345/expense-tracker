@@ -13,6 +13,8 @@ public enum ErrorEnum {
     LOGIN_INFO_REQUIRED(400104, 400, "error_login_info_required"),
     EXCEED_MAX_PASSWORD_LENGTH(400105, 400, "error_exceed_max_password_length"),
     REFRESH_TOKEN_REQUIRED(400106, 400, "error_refresh_token_required"),
+    REQUIRED_FIELD(400107, 400, "error_required_field"),
+
 
     UNAUTHORIZED(401101, 401, "error_unauthorized"),
 

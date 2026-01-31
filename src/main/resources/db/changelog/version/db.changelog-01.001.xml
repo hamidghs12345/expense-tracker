@@ -57,4 +57,22 @@
 
     </sql>
   </changeSet>
+
+  <changeSet id="CreateIncome" author="Hamid Ghs">
+    <sql>
+
+      CREATE TABLE income
+      (
+        id                 BINARY(16)     NOT NULL,
+        user_id            BIGINT         NOT NULL,
+        amount             DECIMAL(23, 5) NOT NULL,
+        source             VARCHAR(50)    NOT NULL,
+        created_at         datetime(3)    NULL,
+        updated_at         datetime(3)    NULL,
+        CONSTRAINT pk_income PRIMARY KEY (id)
+      );
+
+    </sql>
+  </changeSet>
+
 </databaseChangeLog>
