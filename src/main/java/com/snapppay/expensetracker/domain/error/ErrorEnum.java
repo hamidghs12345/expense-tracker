@@ -20,6 +20,7 @@ public enum ErrorEnum {
 
     GENERAL_NOT_FOUND(404101, 404, "error_general_not_found"),
     USER_ROLE_NOT_FOUND(404102, 404, "error_user_role_not_found"),
+    USER_NOT_FOUND(404103, 404, "error_user_not_found"),
 
     GENERAL_ACCESS_DENIED(403101, 403, "error_general_access_denied"),
 
