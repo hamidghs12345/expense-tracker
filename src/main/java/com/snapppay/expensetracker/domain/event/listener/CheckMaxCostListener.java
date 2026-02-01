@@ -4,7 +4,7 @@ import com.snapppay.expensetracker.domain.event.CheckMaxCostEvent;
 import com.snapppay.expensetracker.domain.model.expense.Expense;
 import com.snapppay.expensetracker.domain.model.tag.MaxCost;
 import com.snapppay.expensetracker.domain.service.expense.ExpenseRetrievalService;
-import com.snapppay.expensetracker.domain.service.tag.MaxCostCalculationService;
+import com.snapppay.expensetracker.domain.service.tag.calculate.MaxCostCalculationService;
 import com.snapppay.expensetracker.domain.service.tag.MaxCostRetrievalService;
 import java.math.BigDecimal;
 import java.util.List;
@@ -38,7 +38,7 @@ public class CheckMaxCostListener {
     for (MaxCost mc : maxCosts) {
 
       BigDecimal total = maxCostCalculationService
-          .calculateTotalForPeriod(ex.getTagId(), mc.getPeriod());
+          .calculateByTagIdForPeriod(ex.getTagId(), mc.getPeriod());
 
       if (total.compareTo(mc.getAmount()) > 0) {
 

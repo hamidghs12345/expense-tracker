@@ -28,8 +28,8 @@ public class AuthenticationController {
       @RequestBody AuthenticationRequest request
   ) {
     AuthenticationInfo authenticationInfo = AuthenticationInfo.builder()
-        .mobile(request.getMobile())
-        .password(request.getPassword())
+        .mobile(request.mobile())
+        .password(request.password())
         .build();
 
     Pair<String, String> tokens = authenticationUseCase.authenticate(authenticationInfo);
@@ -46,7 +46,7 @@ public class AuthenticationController {
   public ResponseEntity<AuthenticationResponse> refreshToken(
       @Valid @RequestBody RefreshTokenRequest request
   ) {
-    Pair<String, String> tokens = authenticationUseCase.refreshToken(request.getRefreshToken());
+    Pair<String, String> tokens = authenticationUseCase.refreshToken(request.refreshToken());
 
     AuthenticationResponse response = AuthenticationResponse.builder()
         .accessToken(tokens.first())

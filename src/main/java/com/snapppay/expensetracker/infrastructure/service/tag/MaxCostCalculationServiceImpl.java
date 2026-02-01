@@ -1,6 +1,6 @@
 package com.snapppay.expensetracker.infrastructure.service.tag;
 
-import com.snapppay.expensetracker.domain.service.tag.MaxCostCalculationService;
+import com.snapppay.expensetracker.domain.service.tag.calculate.MaxCostCalculationService;
 import com.snapppay.expensetracker.infrastructure.persistence.entity.tag.MaxCostEntity.Period;
 import com.snapppay.expensetracker.infrastructure.persistence.repository.ExpenseRepository;
 import java.math.BigDecimal;
@@ -17,7 +17,7 @@ public class MaxCostCalculationServiceImpl implements MaxCostCalculationService 
   private final ExpenseRepository expenseRepository;
 
   @Override
-  public BigDecimal calculateTotalForPeriod(UUID tagId, Period period) {
+  public BigDecimal calculateByTagIdForPeriod(UUID tagId, Period period) {
 
     ZonedDateTime now = ZonedDateTime.now();
 

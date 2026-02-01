@@ -1,15 +1,8 @@
 package com.snapppay.expensetracker.api.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
-public class AuthenticationRequest {
-
-  private String mobile;
-  private String password;
+public record AuthenticationRequest(
+    String mobile,
+    String password
+) {
 
 }
