@@ -9,7 +9,6 @@ spring:
     url: jdbc:mysql://localhost:3306/ex_tracker?useUnicode=yes&characterEncoding=UTF-8&characterSetResults=UTF-8&createDatabaseIfNotExist=true
     username: root
     password: root
-    driver-class-name: com.mysql.cj.jdbc.Driver
   jpa:
     hibernate:
       ddl-auto: none
@@ -22,8 +21,6 @@ spring:
           characterEncoding: utf-8
           CharSet: utf-8
           useUnicode: true
-        default_batch_fetch_size: 20
-        enable_lazy_load_no_trans: true
 
   liquibase:
     change-log: classpath:db/changelog/db.changelog-master.xml

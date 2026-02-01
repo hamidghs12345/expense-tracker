@@ -19,8 +19,6 @@ spring:
           characterEncoding: utf-8
           CharSet: utf-8
           useUnicode: true
-        default_batch_fetch_size: 20
-        enable_lazy_load_no_trans: true
 
   liquibase:
     enabled: false
