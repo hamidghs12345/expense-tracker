@@ -4,7 +4,6 @@ A simple Spring Boot application to track personal expenses.
 
 ## Features
 
-* Add, edit, and delete expenses
 * Categorize expenses
 * View summary of expenses
 * REST API for integration
